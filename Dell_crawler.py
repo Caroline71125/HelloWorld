@@ -9,8 +9,9 @@ browser = Browser()
 browser.visit('http://www.dell.com/en-us/shop/dell-laptops/sc/laptops/xps-laptops')
 
 s1 = browser.find_by_xpath('//div//a[@class="btn btn-default dropdown-toggle col-xs-12 accessories-anav-dropdown-styling refiner-title"]')
-print (s1)
-
+s2 = browser.find_by_css('.dropdown-toggle')
+print ("s1", s1)
+print ("s2", s2)
 
 
 #browser.fill('q', 'splinter - python acceptance testing for web applications')
