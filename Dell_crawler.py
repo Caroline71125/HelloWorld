@@ -2,16 +2,49 @@
 
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
-from splinter import Browser
+#from splinter import Browser
+import time
+
+## selenium
+driver = webdriver.Chrome()
+driver.get("http://www.dell.com/en-us/shop/dell-laptops/sc/laptops/xps-laptops")
+
+videocard = driver.find_element_by_xpath('//div[@data-refiner="5712"]')
+videocard.click() #點Videocards下拉選單
+
+vccheckbox = driver.find_element_by_id('6149')
+vccheckbox.click() #點Videocards的選項
+time.sleep(5) #選擇要的顯卡,等一下網頁
+
+titles = driver.find_elements_by_xpath('//span[@data-testid="configItemProductTitle"]')
+for title in titles:
+    print (title.text)
+
+prices = driver.find_elements_by_xpath('//strong[@data-testid="psDellPrice"]')
+for price in prices:
+    print (price.text)
 
 
-browser = Browser()
-browser.visit('http://www.dell.com/en-us/shop/dell-laptops/sc/laptops/xps-laptops')
 
-s1 = browser.find_by_xpath('//div//a[@class="btn btn-default dropdown-toggle col-xs-12 accessories-anav-dropdown-styling refiner-title"]')
-s2 = browser.find_by_css('.dropdown-toggle')
-print ("s1", s1)
-print ("s2", s2)
+## splinter
+#browser = Browser()
+#browser.visit('http://www.dell.com/en-us/shop/dell-laptops/sc/laptops/xps-laptops')
+
+#step1 = browser.find_by_xpath('//div[@data-refiner="5712"]').click()
+#step2 = browser.find_by_id('6149').click()
+#time.sleep(10)
+
+#title = browser.find_by_xpath('//span[@data-testid="configItemProductTitle"]')
+#price = browser.find_by_xpath('//strong[@data-testid="psDellPrice"]')
+
+#for t in title:
+#  print ("Product",t.text)
+
+#for p in price:       #跑不
+#  print ("Product",p.text)
+
+
+
 
 
 #browser.fill('q', 'splinter - python acceptance testing for web applications')
@@ -22,7 +55,7 @@ print ("s2", s2)
 #else:
 #    print ("No, it wasn't found... We need to improve our SEO techniques")
 
-browser.quit()
+#browser.quit()
 
 
 #bw = Browser('firefox', options=firefox_options)
