@@ -11,50 +11,92 @@ driver.get("http://www.dell.com/en-us/shop/dell-laptops/sc/laptops/xps-laptops")
 
 videocard = driver.find_element_by_xpath('//div[@data-refiner="5712"]')
 videocard.click() #點Videocards下拉選單
-
+videocardID = ['']
 vccheckbox = driver.find_element_by_id('6149')
-print(vccheckbox.text, "系列")
+gpuname = vccheckbox.text.encode('utf-8').split('® ')[2]
+
+print(vccheckbox.text)
 vccheckbox.click() #點Videocards的選項
 time.sleep(5) #等一下網頁
 
 test = {}
-titlelist = list()
-titles = driver.find_elements_by_xpath('//span[@data-testid="configItemProductTitle"]')
-for title in titles:
-    titlelist.append(title.text)
-    #test['title'] = title.text
-    print (title.text)
-
-
+namelist = list()
 pricelist = list()
+
+names = driver.find_elements_by_xpath('//span[@data-testid="configItemProductTitle"]')
+for name in names:
+    namelist.append(name.text)
+    #test['title'] = title.text
+    #print (title.text)
+
+
+
 prices = driver.find_elements_by_xpath('//strong[@data-testid="psDellPrice"]')
 for price in prices:
     pricelist.append(price.text)
     #test['price'] = price.text
-    print (price.text)
-
-displaysizelist = list()
-displaysizes = driver.find_elements_by_css_selector('span.text-gray-dark')
-for displaysize in displaysizes:
-    displaysizelist.append(displaysize.text)
-    print (displaysize.text)
+    #print (price.text)
 
 
-print(titlelist)
-print(pricelist)
-print(displaysizelist)
+#print(titlelist)
+#print(pricelist)
 
 
-test['title'] = titlelist
+
+test['name'] = namelist
 test['price'] = pricelist
-test['displaysize'] = displaysizelist
 
 print(test)
 
 #vctype = [6149, 6151, 6153, 6157, 6159]
 
+##### 3/23 #####
+# -*- coding: utf-8 -*-
+
+from selenium import webdriver
+from selenium.webdriver.support.ui import Select
+#from splinter import Browser
+import time
+
+## selenium
+driver = webdriver.Chrome()
+driver.get("http://www.dell.com/en-us/shop/dell-laptops/sc/laptops/xps-laptops")
+
+videocard = driver.find_element_by_xpath('//div[@data-refiner="5712"]')
+videocard.click() #點Videocards下拉選單
+videocardID = ['']
+vccheckbox = driver.find_element_by_id('6149')
+gpuname = vccheckbox.text.encode('utf-8').split('® ')[2]
+print(gpuname, type(gpuname))
+vccheckbox.click() #點Videocards的選項
+time.sleep(5) #等一下網頁
 
 
+
+headers=['productName', 'productPrice', 'gpuName', 'gpuType', 'createDate', 'modifyDate']
+test = {}
+for h in headers:
+    test[h]=[]
+
+#prices = driver.find_elements_by_xpath('//strong[@data-testid="psDellPrice"]')
+#for price in prices:
+#    pricelist.append(price.text)
+    
+names = driver.find_elements_by_xpath('//span[@data-testid="configItemProductTitle"]')
+
+for name in names:
+    test['productName'].append(name.text)
+    test['gpuName'].append(gpuname)    
+    
+#fruits = ['banana', 'apple',  'mango']
+#for h in fruits:    
+#    test['name'].append(h)
+#    test['price'].append(gpuname)
+    
+print(test)
+
+
+##### 3/23 #####
 #class Product():
 # def __init__(self, title, price, displaysize):
 #  self.title = title
